@@ -4,6 +4,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>虹橋系統官方帳號入口</title>
         <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </head>
     <body>
         <div class="row" style="margin: 10px">
@@ -27,7 +30,7 @@
             </div>
         </div>
         <script>
-            function initailize(){
+            function initialize(){
             var liffID = '1656947329-lpkV9NLP';
 
             liff.init({
@@ -51,26 +54,30 @@
                 }
             }
             */
+            
+            
             }).catch(function(error) {
                 console.log(error);
             });}
             function pushMsg(pname, paccount, loc) {
                 var Msg = "虹橋登入"
-                Msg = Msg+pname+"/"
-                Msg = Msg+paccount+"/"
-                Msg = Msg+loc+"/"
-                liff.sendMessages([
-                {
-                    type: "text",
-                    text: Msg,
-                },
-            ])
+                if(pname==""||paccount==""){
+                    alert("姓名或公務信箱未輸入")
+                }else{
+                    Msg = Msg+pname+"/"
+                    Msg = Msg+paccount+"/"
+                    Msg = Msg+loc+"/"
+                    liff.sendMessages([
+                        {
+                            type: "text",
+                            text: Msg,
+                        },
+                    ])
+                }
             }
-            $(document).ready(function () {
-                initialize()
-                $('#sure').click(function (e) {  //按下確定鈕
-                    pushMsg($('#name').val(), $('#mail').val(), $('#loc').val());
-                });
+            initialize()
+            $('#sure').click(function (e) {  //按下確定鈕
+                 pushMsg($('#name').val(), $('#mail').val(), $('#loc').val());
             });
         </script>
     </body>
