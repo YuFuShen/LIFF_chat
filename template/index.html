@@ -60,6 +60,19 @@
         </div>
     </div>
     <script>
+        function initialize(){
+            var liffID = '1656947329-lpkV9NLP';
+            liff.init({
+                liffId: liffID
+            }).then(function() {
+            // 這邊開始寫使用其他功能
+            console.log('LIFF init');
+                if(!liff.isLoggedIn()){
+                    liff.login()
+                };
+                alert("初始化成功！\n麻煩您填寫完整後再按下產生開會通知的按鈕哦！");
+            }
+        }
         function pushMsg(meetName,datetime,time,loc,host,contact,phone,discuss,attendees,audience,remark) {
                 var Msg = "建立會議通知："
                     Msg = Msg+meetName+";"
