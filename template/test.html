@@ -2,7 +2,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>虹橋系統官方帳號入口</title>
+        <title>虹橋系統官方帳號快速登入</title>
         <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -11,12 +11,7 @@
     <body>
         <div class="row" style="margin: 10px">
             <div class="col-12" style="margin: 10px">
-                <label>姓名</label>
-                <input type="text" id="name" class="form-control" />
-                <br />
-                <label>公務信箱(不需加@goo.tyai.tyc.edu.tw)</label>
-                <input type="text" id="mail" value="" class="form-control" />
-                <br />
+                <h3>虹橋系統官方帳號快速登入</h3>
                 <label>功能跳轉</label>
                 <select id="loc" class="form-control">
                     <option selected>首頁</option>
@@ -26,13 +21,11 @@
                 </select>
                 <br />
                 <button class="btn btn-success btn-block" id="sure">確定</button>
-                
             </div>
         </div>
         <script>
             function initialize(){
             var liffID = '1656947329-lpkV9NLP';
-
             liff.init({
                 liffId: liffID
             }).then(function() {
@@ -41,7 +34,7 @@
             if(!liff.isLoggedIn()){
                 liff.login()
             };
-            alert("初始化成功！");
+            alert("初始化成功！\n若非本人使用此登入功能，將負相關法律責任！");
             const idToken = liff.getDecodedIDToken();
             console.log(idToken["sub"])
             /*var xhr = new XMLHttpRequest();
@@ -54,19 +47,11 @@
                 }
             }
             */
-            
-            
             }).catch(function(error) {
                 console.log(error);
             });}
-            function pushMsg(pname, paccount, loc) {
+            function pushMsg(loc) {
                 var Msg = "虹橋登入："
-                if(pname==""||paccount==""){
-                    alert("姓名或公務信箱未輸入！")
-                    return
-                }else{
-                    Msg = Msg+pname+"/"
-                    Msg = Msg+paccount+"/"
                     Msg = Msg+loc
                     liff.sendMessages([
                         {
@@ -77,12 +62,10 @@
                         console.log("message sent");
                         liff.closeWindow();
                     })
-                }
             }
             initialize()
             $('#sure').click(function (e) {  //按下確定鈕
-                 pushMsg($('#name').val(), $('#mail').val(), $('#loc').val());
-                 
+                 pushMsg($('#loc').val());
             });
         </script>
     </body>
