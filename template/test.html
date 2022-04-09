@@ -60,13 +60,14 @@
                 console.log(error);
             });}
             function pushMsg(pname, paccount, loc) {
-                var Msg = "虹橋登入"
+                var Msg = "虹橋登入："
                 if(pname==""||paccount==""){
-                    alert("姓名或公務信箱未輸入")
+                    alert("姓名或公務信箱未輸入！")
+                    return
                 }else{
                     Msg = Msg+pname+"/"
                     Msg = Msg+paccount+"/"
-                    Msg = Msg+loc+"/"
+                    Msg = Msg+loc
                     liff.sendMessages([
                         {
                             type: "text",
@@ -74,6 +75,7 @@
                         },
                     ])
                 }
+                liff.closeWindow();
             }
             initialize()
             $('#sure').click(function (e) {  //按下確定鈕
