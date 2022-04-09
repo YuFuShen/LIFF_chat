@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>test LIFF</title>
+        <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+        <script>
+            var liffID = '1656947329-lpkV9NLP';
+
+            liff.init({
+                liffId: liffID
+            }).then(function() {
+            // 這邊開始寫使用其他功能
+            console.log('LIFF init');
+            alert("初始化成功！");
+            if(!liff.isLoggedIn()){
+                liff.login()
+            };
+            }).catch(function(error) {
+                console.log(error);
+            });
+        </script>
+    </body>
+</html>
