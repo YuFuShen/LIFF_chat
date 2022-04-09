@@ -2,12 +2,32 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>test LIFF</title>
+        <title>虹橋系統官方帳號入口</title>
         <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="row" style="margin: 10px">
+            <div class="col-12" style="margin: 10px">
+                <label>姓名</label>
+                <input type="text" id="name" class="form-control" />
+                <br />
+                <label>公務信箱(不需加@goo.tyai.tyc.edu.tw)</label>
+                <input type="text" id="mail" value="" class="form-control" />
+                <br />
+                <label>功能跳轉</label>
+                <select id="loc" class="form-control">
+                    <option selected>首頁</option>
+                    <option>點名(手機版)</option>
+                    <option>獎懲</option>
+                    <option>請假</option>
+                </select>
+                <br />
+                <button class="btn btn-success btn-block" id="sure">確定</button>
+                
+            </div>
+        </div>
         <script>
+            function initailize(){
             var liffID = '1656947329-lpkV9NLP';
 
             liff.init({
@@ -31,14 +51,26 @@
                 }
             }
             */
-            liff.sendMessages([
-            {
-                type: "text",
-                text: "Hello, World!\nyour token:"+idToken["sub"],
-                },
-            ])
             }).catch(function(error) {
                 console.log(error);
+            });}
+            function pushMsg(pname, paccount, loc) {
+                var Msg = "虹橋登入"
+                Msg = Msg+pname+"/"
+                Msg = Msg+paccount+"/"
+                Msg = Msg+loc+"/"
+                liff.sendMessages([
+                {
+                    type: "text",
+                    text: Msg,
+                },
+            ])
+            }
+            $(document).ready(function () {
+                initialize()
+                $('#sure').click(function (e) {  //按下確定鈕
+                    pushMsg($('#name').val(), $('#mail').val(), $('#loc').val());
+                });
             });
         </script>
     </body>
