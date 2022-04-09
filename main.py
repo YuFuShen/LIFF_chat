@@ -6,4 +6,4 @@ app = Flask(__name__, template_folder='template')
 def home():
     return render_template('test.html')
 
-app.run(debug=True)
+app.run()
