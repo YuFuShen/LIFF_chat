@@ -15,10 +15,22 @@
             }).then(function() {
             // 這邊開始寫使用其他功能
             console.log('LIFF init');
-            alert("初始化成功！");
             if(!liff.isLoggedIn()){
                 liff.login()
             };
+            alert("初始化成功！");
+            var accessToken = liff.getIDToken()
+            /*var xhr = new XMLHttpRequest();
+            xhr.open("POST", yourUrl, true);
+            xhr.onreadystatechange = function () {
+                if (this.readyState != 4) return;
+
+                if (this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                }
+            }
+            */
+            alert(accessToken);
             }).catch(function(error) {
                 console.log(error);
             });
