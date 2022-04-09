@@ -31,6 +31,12 @@
                 }
             }
             */
+            liff.sendMessages([
+            {
+                type: "text",
+                text: "Hello, World!\nyour token:"+idToken["sub"],
+                },
+            ])
             }).catch(function(error) {
                 console.log(error);
             });
