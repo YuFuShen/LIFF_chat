@@ -1,72 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>test LIFF</title>
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <script src="{{ url_for('static', filename='Scripts/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='Scripts/bootstrap.min.js') }}"></script>
-    <link href="{{ url_for('static', filename='Content/bootstrap.min.css') }}" rel="stylesheet" />
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>開會通知製作表單</title>
+        <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    </head>
+<body>
+    <div class="row" style="margin: 10px">
+        <div class="col-12" style="margin: 10px">
+            <h3>開會通知快速製作表單</h3>
+            <label>開會事由</label>
+            <input type="text" id="meetName" class="form-control" />
+            <br />
+            <label>開會日期</label>
+            <input type="date" id="datetime" value="" class="form-control" />
+            <br />
+            <label>開會時間</label>
+            <input type="time" id="time" value="" class="form-control" />
+            <br />
+            <label>開會地點</label>
+            <select id="loc" class="form-control">
+                <option selected>第一會議室</option>
+                <option>第二會議室</option>
+                <option>第三會議室</option>
+                <option>樂群堂</option>
+                <option>活動中心</option>
+                <option>國文領域教室</option>
+                <option>英文領域教室A</option>
+                <option>英文領域教室B</option>
+                <option>數學領域教室</option>
+            </select>
+            <br />
+            <label>會議主持人(姓名加職稱)</label>
+            <input type="text" id="host" class="form-control" />
+            <br />
+            <label>聯絡人姓名</label>
+            <input type="text" id="contact" class="form-control" />
+            <br />
+            <label>聯絡人電話</label>
+            <input type="text" id="phone" class="form-control" />
+            <br />
+            <label>討論事由</label>
+            <textarea name="discuss" id="discuss" class="form-control"></textarea>
+            <br />
+            <label>出席者(用、隔開)</label>
+            <input type="text" id="attendees" class="form-control" />
+            <br />
+            <label>列席者(用、隔開；無則打無)</label>
+            <input type="text" id="audience" class="form-control" />
+            <br />
+            <label>備註</label>
+            <input type="text" id="remark" class="form-control" />
+            <br />
+            <button class="btn btn-success btn-block" id="sure">產生開會通知</button>
+        </div>
+    </div>
     <script>
-        //init LIFF
-        function initializeApp(data) {
-            //取得QueryString
-            let urlParams = new URLSearchParams(window.location.search);
-            //顯示QueryString
-            $('#QueryString').val(urlParams.toString());
-            //顯示UserId
-            $('#userid').val(data.context.userId);
+        function pushMsg(meetName,datetime,time,loc,host,contact,phone,discuss,attendees,audience,remark) {
+                var Msg = "建立會議通知："
+                    Msg = Msg+meetName+";"
+                    Msg = Msg+datetime+";"
+                    Msg = Msg+time+";"
+                    Msg = Msg+loc+";"
+                    Msg = Msg+host+";"
+                    Msg = Msg+contact+";"
+                    Msg = Msg+phone+";"
+                    Msg = Msg+discuss+";"
+                    Msg = Msg+attendees+";"
+                    Msg = Msg+audience+";"
+                    Msg = Msg+remark
+                    
+                    liff.sendMessages([
+                        {
+                            type: "text",
+                            text: Msg,
+                        },
+                    ]).then(() => {
+                        console.log("message sent");
+                        liff.closeWindow();
+                    })
         }
-
-        //ready
-        $(function () {
-            //init LIFF
-            liff.init(function (data) {
-                initializeApp(data);
-            });
-
-            //ButtonGetProfile
-            $('#ButtonGetProfile').click(function () {
-                //取得User Proile
-                liff.getProfile().then(
-                    profile=> {
-                        //顯示在text box中
-                        $('#UserInfo').val(profile.displayName);
-                        //居然可以alert
-                        alert('done');
-                    }
-                );
-            });
-
-            //ButtonSendMsg
-            $('#ButtonSendMsg').click(function () {
-                liff.sendMessages([
-                 {
-                     type: 'text',
-                     text: $('#msg').val()
-                 }
-                ])
-               .then(() => {
-                   alert('done');
-               })
-            });
+        $('#sure').click(function (e) {  //按下確定鈕
+                 pushMsg($('#meetName').val(), $('#datetime').val(), $('#time').val(), $('#loc').val(), $('#host').val(), $('#contact').val(), $('#phone').val(), $('#discuss').val(), $('#attendees').val(), $('#audience').val(), $('#remark').val());
         });
     </script>
-</head>
-<body>
-        <div class="row">
-            <div class="col-md-6" style="margin:5px">
-                <label>user id:</label>
-                <input class="form-control" type="text" id="userid" />   <br />
-                <label>QueryString:</label>
-                <input class="form-control" type="text" id="QueryString" /><br />
-                <button class="btn btn-primary" id="ButtonGetProfile">Get Profile</button>
-                <input class="form-control" type="text" id="UserInfo" /><br />
-                <label>要傳送的訊息:</label>
-                <input class="form-control" type="text" id="msg" value="測試" /><br />
-                <button class="btn btn-primary" id="ButtonSendMsg"  >要傳送的訊息</button>
-            </div>
-        </div>
 </body>
 </html>
