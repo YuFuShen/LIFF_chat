@@ -19,7 +19,8 @@
                 liff.login()
             };
             alert("初始化成功！");
-            var accessToken = JSON.parse(liff.getDecodedIDToken())
+            const idToken = liff.getDecodedIDToken();
+            console.log(idToken)
             /*var xhr = new XMLHttpRequest();
             xhr.open("POST", yourUrl, true);
             xhr.onreadystatechange = function () {
@@ -30,8 +31,6 @@
                 }
             }
             */
-           console.log(accessToken)
-            alert(accessToken);
             }).catch(function(error) {
                 console.log(error);
             });
