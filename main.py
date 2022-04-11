@@ -10,5 +10,9 @@ def home():
 def red():
     return render_template('index.html')
 
+@app.route("/test")
+def blue():
+    return render_template('try.html')
+
 if __name__=="__main__":
     app.run(debug=True)

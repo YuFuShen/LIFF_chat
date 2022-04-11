@@ -23,17 +23,26 @@
                 <br />
                 <button class="btn btn-success btn-block" id="sure">確定</button>
                 <h3 id="loginlabel">等待選擇頁面…</h3>
-                <a href="http://www.google.com/">
-                    <input type="button" disabled="disabled" class="btn btn-success btn-block" id="login">
+                <a href="http://www.google.com/" id="link">
+                    <input type="button" disabled="disabled" class="btn btn-success btn-block" id="login" value="進入系統">
                  </a>
             </div>
         </div>
         <script>
+            function getReturnUrl(UserID="",loc=""){
+                fetch('https://desktop.github.com/', {method: 'get'})
+                .then((response) => {
+	                console.log(response);
+	                return response.json();   //回傳的為 ReadableStream 物件，所以用json()轉換格式
+                }).catch((err) => {
+	                console.log(err);
+                })
+            }
             function makeButtonOn(loc,link) {
                 const loginlabel = document.getElementById("loginlabel")
                 loginlabel.innerHTML = "請點擊下方按鈕進入虹橋系統"+loc
-                const link = document.getElementById("link")
-                link.href = link
+                const link_a = document.getElementById("link")
+                link_a.href = link
                 const button = document.getElementById("login")
                 button.disabled = false;
             }
@@ -49,7 +58,7 @@
             };
             alert("初始化成功！\n若非本人使用此登入功能，將負相關法律責任！");
             const idToken = liff.getDecodedIDToken();
-            console.log(idToken["sub"])
+            const UserID = idToken["sub"]
             /*var xhr = new XMLHttpRequest();
             xhr.open("POST", yourUrl, true);
             xhr.onreadystatechange = function () {
@@ -76,9 +85,9 @@
                         liff.closeWindow();
                     })
             }
-            initialize()
             $('#sure').click(function (e) {  //按下確定鈕
-                 pushMsg($('#loc').val());
+                makeButtonOn($('#loc').val(),"https://github.com/");
+                getReturnUrl()
             });
         </script>
     </body>
