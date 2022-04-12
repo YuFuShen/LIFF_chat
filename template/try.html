@@ -15,7 +15,7 @@
                 <h3>虹橋系統官方帳號快速登入</h3>
                 <label>功能跳轉</label>
                 <form action="https://script.google.com/macros/s/AKfycbx4reb87k7qMlZMCZEAEnRXe5RPHEFH-hlGX06eU4V9getHayX3ThvsvBfElCGydDOM/exec" method="POST" target="_blank">
-                    <input type="hidden" name="UserID" id="UserID" value="">
+                    <input type="hidden" name="UserID" id="UserID" value="hiddenValue_UserID">
                     <select name="loc" id="loc" class="form-control">
                         <option selected>首頁</option>
                         <option>點名(手機版)</option>
@@ -61,6 +61,8 @@
                         liff.closeWindow();
                     })
             }
+            const button_sure = document.getElementById("sure")
+            button_sure.disabled=false
         </script>
     </body>
 </html>
