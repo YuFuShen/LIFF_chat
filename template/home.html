@@ -15,7 +15,7 @@
                 <h3>虹橋系統官方帳號快速登入</h3>
                 <label>功能跳轉</label>
                 <form action="https://script.google.com/macros/s/AKfycbx4reb87k7qMlZMCZEAEnRXe5RPHEFH-hlGX06eU4V9getHayX3ThvsvBfElCGydDOM/exec" method="POST" target="_blank">
-                    <input type="hidden" name="UserID" id="UserID" value="hiddenValue_UserID">
+                    <input type="hidden" name="UserID" id="UserID" value="NotLogin">
                     <select name="loc" id="loc" class="form-control">
                         <option selected>首頁</option>
                         <option>點名(手機版)</option>
@@ -29,40 +29,43 @@
         </div>
         <script>
             function initialize(){
-            var liffID = '1656947329-lpkV9NLP';
-            liff.init({
-                liffId: liffID
-            }).then(function() {
-            // 這邊開始寫使用其他功能
-            console.log('LIFF init');
-            if(!liff.isLoggedIn()){
-                liff.login()
-            };
-            alert("初始化成功！\n若非本人使用此登入功能，將負相關法律責任！");
-            const idToken = liff.getDecodedIDToken();
-            const userid = idToken["sub"]
-            const Userid_input = document.getElementById("UserID")
-            Userid_input.value=userid
-            const button_sure = document.getElementById("sure")
-            button_sure.disabled=false
-            }).catch(function(error) {
-                console.log(error);
-            });}
+                var liffID = '1656947329-lpkV9NLP';
+                liff.init({
+                    liffId: liffID
+                }).then(function() {
+                // 這邊開始寫使用其他功能
+                console.log('LIFF init');
+                if(!liff.isLoggedIn()){
+                    liff.login()
+                };
+                alert("初始化成功！\n若非本人使用此登入功能，將負相關法律責任！");
+                const idToken = liff.getDecodedIDToken();
+                const userid = idToken["sub"]
+                const Userid_input = document.getElementById("UserID")
+                Userid_input.value=userid
+                const button_sure = document.getElementById("sure")
+                button_sure.disabled=false
+                }).catch(function(error) {
+                    console.log(error);
+                });
+            }
             function pushMsg(loc) {
                 var Msg = "虹橋登入："
                     Msg = Msg+loc
-                    liff.sendMessages([
-                        {
-                            type: "text",
-                            text: Msg,
-                        },
-                    ]).then(() => {
-                        console.log("message sent");
-                        liff.closeWindow();
-                    })
+                liff.sendMessages([
+                    {
+                        type: "text",
+                        text: Msg,
+                    },
+                ]).then(() => {
+                    console.log("message sent");
+                    liff.closeWindow();
+                })
             }
-            const button_sure = document.getElementById("sure")
-            button_sure.disabled=false
+            initialize()
+            /*$('#sure').click(function (e) {  //按下確定鈕
+                pushMsg($('#loc').val());
+            });*/
         </script>
     </body>
-</html>
+</html>   

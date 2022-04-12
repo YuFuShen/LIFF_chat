@@ -4,15 +4,15 @@ app = Flask(__name__, template_folder='template')
 
 @app.route("/")
 def home():
-    return render_template('test.html')
+    return render_template('home.html')
 
-@app.route("/g-meet")
-def red():
-    return render_template('index.html')
+@app.route("/first-connect")
+def first_connect():
+    return render_template('first-connect.html')
 
 @app.route("/test")
-def blue():
-    return render_template('try.html')
+def test():
+    return render_template('test.html')
 
 if __name__=="__main__":
     app.run(debug=True)
